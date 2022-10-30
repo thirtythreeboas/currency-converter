@@ -1,0 +1,154 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-size: 1em;
+}
+
+/* nav styles */
+/* nav styles */
+/* nav styles */
+
+nav {
+  display: flex;
+  justify-content: center;
+  padding: 1em;
+  gap: 1em;
+  background-color: #1c1029;
+}
+
+.route-link {
+  text-decoration: none;
+  color: #fff;
+  border-radius: 0.4em;
+  padding: 0.6em;
+  background-color: #38204e;
+}
+
+.route-link:hover {
+  background-color: #733ca5;
+}
+
+.active {
+  background-color: rgb(64, 224, 96);
+  color: #000;
+}
+
+.active:hover {
+  background-color: rgb(64, 224, 96);
+}
+
+
+
+/* converter styles */
+/* converter styles */
+/* converter styles */
+
+
+
+.converter {
+  display: flex;
+  justify-content: center;
+  margin-top: 4em;
+}
+
+.sub-block {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 260px;
+  gap: 15px;
+  padding: 3em;
+  border: 2px solid #201673;
+  border-radius: 3px;
+  background-color: #c6346c;
+}
+
+.conv-style {
+  padding: 4px;
+  border-radius: 3px;
+  border: none;
+}
+
+.error {
+  text-align: center;
+  background-color: #fff;
+  font-size: 12px;
+  color: red;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+.result {
+  position: absolute;
+  bottom: 20%;
+  left: 50%;
+  transform: translate(-50%, 0%);
+  width: 100%;
+  text-align: center;
+}
+
+.result-comp {
+  border-radius: 3px;
+  padding: 3px;
+}
+
+
+
+/* currency rates styles */
+/* currency rates styles */
+/* currency rates styles */
+
+
+
+.currency-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: fit-content;
+  margin: 4em auto;
+}
+
+.default-curr {
+  width: 100%;
+}
+
+form {
+  padding: 1em 0;
+  padding-left: 0.7em;
+}
+
+select {
+  border: none;
+  text-align: center;
+}
+
+table {
+  border-collapse: collapse;
+  font-size: 16px;
+  text-indent: initial;
+  border-spacing: 2px;
+  border-color: grey;
+  border: 1px solid #d6d9e0;
+  border-bottom: .1px solid #d6d9e0;
+}
+
+th {
+  background-color: #eff1f5;
+  text-align: left;
+  vertical-align: top;
+  padding: 1em;
+}
+
+tr {
+  border-bottom: .1px solid #d6d9e0;
+  border-collapse: collapse;
+}
+
+td {
+  text-align: left;
+  vertical-align: top;
+  padding: 1em;
+}
