@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { getCurrencies, selectCurrency, changeCurr, setLang } from '../features/currency/сurrencySlice';
 import currs from '../currencies/currs.json';
@@ -11,17 +11,15 @@ const Currency = () => {
 
   useEffect(() => {
     dispatch(setLang());
-  }, [])
-
-  useEffect(() => {
-    dispatch(getCurrencies());
   }, []);
+
+  const fetchedData = useMemo(() => dispatch(getCurrencies()), [code]);
 
   const getNewCode = (e) => {
     const c = e.target.value;
     const v = Object.entries(currs).find(e => e[1] === c);
     dispatch(changeCurr(v));
-    dispatch(getCurrencies());
+    // dispatch(getCurrencies());
   }
 
   if (Object.keys(rates).length === 0) return;
