@@ -1,44 +1,42 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { getData } from '../APICall/getCurrencies';
 import currs from '../../currencies/currs.json';
 import langs from '../../currencies/langs.json';
 
 const initialState = {
   rates: {},
   defalutOption: 'Russian Ruble',
-  code: 'RUB',
+  currecnyCode: 'RUB',
   amount: 1
 };
 
 export const getCurrencies = createAsyncThunk(
   'сurrency/fetchCurrencies',
-  async (args, { getState }) => {
-    const state = getState();
-    const currs = `https://open.er-api.com/v6/latest/${state.currency.code}`;
-    const response = await fetch(currs);
-    const data = await response.json();
-    return data;
+    async (args, { getState }) => {
+      const state = getState();
+      return getData(state.currency.currecnyCode);
   }
 );
 
 export const сurrencySlice = createSlice({
-  name: 'сurrency',
+  name: 'currency',
   initialState,
   reducers: {
     changeCurr: (state, action) => {
       return {
         ...state,
-        code: action.payload[0],
+        currecnyCode: action.payload[0],
         defalutOption: action.payload[1]
       }
     },
     setLang: (state) => {
       const userLang = navigator.language || navigator.userLanguage;
       const currLang = Object.keys(langs).find(e =>  e.includes(userLang));
-      const getCurr = Object.entries(currs).filter(e => e[1] === langs[currLang]);
-      const arr = getCurr[0];
+      const getCodeAndLang = Object.entries(currs).filter(e => e[1] === langs[currLang]);
+      const arr = getCodeAndLang[0];
       return {
         ...state,
-        code: arr[0],
+        currecnyCode: arr[0],
         defalutOption: arr[1]
       }
     }
@@ -54,5 +52,5 @@ export const сurrencySlice = createSlice({
 });
 
 export const { changeCurr, setLang } = сurrencySlice.actions;
-export const selectCurrency = state => state.сurrency;
+export const selectCurrency = (state) => state.currency;
 export default сurrencySlice.reducer;

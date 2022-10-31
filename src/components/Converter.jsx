@@ -6,18 +6,18 @@ import currs from '../currencies/currs.json';
 
 const Converter = () => {
 
-  const { resp, data } = useSelector(selectConverter);
+  const { response, data } = useSelector(selectConverter);
   const dispatch = useDispatch(); 
-  const result = isNaN(data.value) ? 'mheh' : 
+  const conversionResult = isNaN(data.value) ? '¯\\_(ツ)_/¯' : 
   <mark className='result-comp'>
     {parseFloat(data.value).toFixed(2)}
   </mark>;
-  const errorRef = useRef(null);
 
+  const errorRef = useRef(null);
 
   useEffect(() => {
     dispatch(setResult());
-  }, [resp]);
+  }, [response]);
 
   useEffect(() => {
     return () => {
@@ -25,12 +25,12 @@ const Converter = () => {
     }
   }, [])
 
-  const buttonPress = async (e) => {
+  const buttonPress = (e) => {
     const { amount, codeOne, codeTwo } = data;
-    const one = Object.keys(currs).includes(codeOne);
-    const two = Object.keys(currs).includes(codeTwo);
+    const fromCode = Object.keys(currs).includes(codeOne);
+    const toCode = Object.keys(currs).includes(codeTwo);
     if (e.code === 'Enter') {
-      if (isNaN(amount) || !one || !two) {
+      if (isNaN(amount) || !fromCode || !toCode) {
         errorRef.current.innerText = 'Your input should look like: \n 10 usd to rub';
       } else {
         errorRef.current.innerText = ':3';
@@ -45,7 +45,7 @@ const Converter = () => {
         <h3>Type in and Press Enter</h3>
         <input className='conv-style' type="text" onChange={e => dispatch(assignOnChangeData(e.target.value))} onKeyDown={(e) => buttonPress(e)}/>
         <span ref={errorRef} className='error'>:3</span>
-        <span className='result'>It's about... {result}</span>
+        <span className='result'>It's about... {conversionResult}</span>
       </div>
     </div>
   )

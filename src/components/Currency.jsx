@@ -1,25 +1,27 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { getCurrencies, selectCurrency, changeCurr, setLang } from '../features/currency/сurrencySlice';
+import { selectCurrency } from '../features/currency/сurrencySlice';
+import { getCurrencies, changeCurr, setLang } from '../features/currency/сurrencySlice';
 import currs from '../currencies/currs.json';
 
 const Currency = () => {
 
-  const currency = useSelector(state => state.currency);
-  const { rates, code, amount, defalutOption } = currency;
+  const currency = useSelector(selectCurrency);
+  const { rates, currecnyCode, amount, defalutOption } = currency;
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(setLang());
   }, []);
 
-  const fetchedData = useMemo(() => dispatch(getCurrencies()), [code]);
+  useEffect(() => {
+    dispatch(getCurrencies())
+  }, [currecnyCode])
 
   const getNewCode = (e) => {
-    const c = e.target.value;
-    const v = Object.entries(currs).find(e => e[1] === c);
-    dispatch(changeCurr(v));
-    // dispatch(getCurrencies());
+    const currency = e.target.value;
+    const code = Object.entries(currs).find(e => e[1] === currency);
+    dispatch(changeCurr(code));
   }
 
   if (Object.keys(rates).length === 0) return;
@@ -55,7 +57,7 @@ const Currency = () => {
         <tbody>
           {
             Object.entries(currs).map((e, i) => {
-              if (e[0] !== code) {
+              if (e[0] !== currecnyCode) {
                 return (
                   <tr key={e[0] + i} >
                     <td>{e[0]}</td>

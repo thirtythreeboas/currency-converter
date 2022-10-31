@@ -1,13 +1,14 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { getData } from '../APICall/getCurrencies';
 import { current } from '@reduxjs/toolkit';
 
 const initialState = {
-  resp: {},
+  response: {},
   data: {
     amount: 0,
     codeOne: '',
     codeTwo: '',
-    value: 'mheh'
+    value: '¯\\_(ツ)_/¯'
   }
 };
 
@@ -15,10 +16,7 @@ export const pressEnter = createAsyncThunk(
   'converter/fetchCurrencies',
   async (args, { getState }) => {
     const state = getState();
-    const link = `https://open.er-api.com/v6/latest/${state.converter.data.codeOne}`;
-    const lelo = await fetch(link);
-    const response = await lelo.json();
-    return response;
+    return getData(state.converter.data.codeOne);
   }
 );
 
@@ -28,9 +26,9 @@ export const converterSlice = createSlice({
   reducers: {
     setResult: (state) => {
       const s = current(state);
-      if (Object.keys(s.resp).length === 0) return;
+      if (Object.keys(s.response).length === 0) return;
       let amount = parseInt(s.data.amount, 10);
-      let rate = s.resp.rates[s.data.codeTwo];
+      let rate = s.response.rates[s.data.codeTwo];
       return {
         ...state,
         data: {
@@ -48,7 +46,7 @@ export const converterSlice = createSlice({
           amount: parseInt(action.payload),
           codeOne: arr[1],
           codeTwo: arr[3],
-          value: 'mheh'
+          value: '¯\\_(ツ)_/¯'
         }
       }
     },
@@ -60,7 +58,7 @@ export const converterSlice = createSlice({
           amount: 0,
           codeOne: '',
           codeTwo: '',
-          value: 'mheh'
+          value: '¯\\_(ツ)_/¯'
         }
       }
     }
@@ -69,7 +67,7 @@ export const converterSlice = createSlice({
     builder.addCase(pressEnter.fulfilled, (state, action) => {
       return {
         ...state,
-        resp: action.payload,
+        response: action.payload,
       }
     })
   }
